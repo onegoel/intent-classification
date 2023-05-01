@@ -1,2 +1,6 @@
 massive@*
 project
+.env
+model-to-s3.py
+test-*
+models/massive-*
