@@ -22,7 +22,7 @@ source <name of environment>/bin/activate (MacOS)
 or
 
 ```
-<name of environment>\Scripts\activate.bat
+<name of environment>\Scripts\activate.bat (Windows)
 ```
 
 ## 3. Install the requirements
