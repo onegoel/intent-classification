@@ -1,4 +1,4 @@
-# SET UP STEPS
+# Set up procedure
 
 Clone the repository
 
