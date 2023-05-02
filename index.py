@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import pandas as pd
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
+from tabulate import tabulate
 
 tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
 massive_en = pd.read_csv('./data/massive-us-en.csv')
@@ -9,8 +10,8 @@ model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-unc
 model.load_state_dict(torch.load('./models/massive-us-en.pt', map_location=torch.device('cpu')))
 model.eval()
 
-user_input = input('Enter a sentence: ')
-user_input = tokenizer(user_input, truncation=True, padding=True)
+user_input_text = input('Enter a sentence: ')
+user_input = tokenizer(user_input_text, truncation=True, padding=True)
 input_ids = torch.tensor(user_input['input_ids']).unsqueeze(0)
 attention_mask = torch.tensor(user_input['attention_mask']).unsqueeze(0)
 outputs = model(input_ids, attention_mask=attention_mask)
@@ -27,6 +28,7 @@ for i in range(len(probs)):
 
 sorted_labels = sorted(label_probs.items(), key=lambda x: x[1], reverse=True)
 
-print("Intents sorted by predicted accuracy:")
-for intent, prob in sorted_labels:
-    print(f"{intent}: {prob:.2%}")
+print("\n\n\nYour input: ", user_input_text)
+table = [[intent, f"{prob:.2%}"] for intent, prob in sorted_labels]
+headers = ["Intent", "Probability"]
+print(tabulate(table, headers=headers))
