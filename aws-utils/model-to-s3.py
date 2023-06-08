@@ -17,6 +17,6 @@ s3_client.create_bucket(Bucket='distilbert-model-ic')
 
 bucket_name = 'distilbert-model-ic'
 object_name = 'massive-us-en.pt'
-file_path = './models/massive-us-en.pt'
+file_path = '../models/massive-us-en.pt'
 
 s3_client.upload_file(file_path, bucket_name, object_name)

@@ -15,7 +15,7 @@ s3_client = boto3.client('s3',
 
 bucket_name = os.environ.get('bucket_name')
 object_name = os.environ.get('object_name')
-file_path = './models/massive-us-en.pt'
+file_path = '../models/massive-us-en.pt'
 
 try:
     s3_client.download_file(bucket_name, object_name, file_path)

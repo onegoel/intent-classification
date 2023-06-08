@@ -3,3 +3,6 @@ project
 .env
 test-*
 models/massive-*
+model-service
+myenv
+node_modules
