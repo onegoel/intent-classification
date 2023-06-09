@@ -22,10 +22,17 @@ app.get('/', (req, res) => {
     res.json({ message: 'Hello World' });
 });
 
-const getIntents = (text) => {
+const getIntents = (text, model) => {
     return new Promise((resolve, reject) => {
         try {
-            const pathToClassifyScript = path.join(__dirname, 'src', 'utils', 'classify_intent.py');
+            let pathToClassifyScript;
+            if (model === 'distilbert') {
+                pathToClassifyScript = path.join(__dirname, 'src', 'utils', 'sup_classify_intent.py');
+            } else if (model === 'bert') {
+                pathToClassifyScript = path.join(__dirname, 'src', 'utils', 'fs_classify_intent.py');
+            } else {
+                pathToClassifyScript = path.join(__dirname, 'src', 'utils', 'sup_classify_intent.py');
+            }
             console.log(pathToClassifyScript);
             console.log(text);
             const python = spawn('python3', [pathToClassifyScript, text]);
@@ -64,8 +71,8 @@ const getIntents = (text) => {
   
 app.post('/api/classify', async (req, res) => {
     try {
-        const { input } = req.body;
-        const intents = await getIntents(input);
+        const { input, model } = req.body;
+        const intents = await getIntents(input, model);
         const response = {
             intents: intents
         };
