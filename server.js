@@ -25,17 +25,10 @@ app.get('/', (req, res) => {
 const getIntents = (text, model) => {
     return new Promise((resolve, reject) => {
         try {
-            let pathToClassifyScript;
-            if (model === 'distilbert') {
-                pathToClassifyScript = path.join(__dirname, 'src', 'utils', 'sup_classify_intent.py');
-            } else if (model === 'bert') {
-                pathToClassifyScript = path.join(__dirname, 'src', 'utils', 'fs_classify_intent.py');
-            } else {
-                pathToClassifyScript = path.join(__dirname, 'src', 'utils', 'sup_classify_intent.py');
-            }
+            let pathToClassifyScript = path.join(__dirname, 'src', 'utils', 'classify_intent.py');
             console.log(pathToClassifyScript);
             console.log(text);
-            const python = spawn('python3', [pathToClassifyScript, text]);
+            const python = spawn('python3', [pathToClassifyScript, text, model]);
             let dataString = '';
   
             python.stdout.on('data', (data) => {

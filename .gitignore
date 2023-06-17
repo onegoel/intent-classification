@@ -6,3 +6,4 @@ models/*.pt
 model-service
 myenv
 node_modules
+ensemble*
